@@ -8,7 +8,7 @@ import { randomWalls } from '../../maze/randomWalls';
 
 export function MazeGenerator() {
   const { colors } = useTheme();
-  const { grid, start, end, gridSize, setWalls, addWall, clearVisualization, isRunning, setIsRunning } = useGrid();
+  const { grid, start, end, gridSize, setWalls, clearVisualization, isRunning } = useGrid();
   const [isOpen, setIsOpen] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const abortRef = useRef(false);
@@ -20,8 +20,9 @@ export function MazeGenerator() {
     clearVisualization();
     abortRef.current = false;
 
-    let walls = [];
+    await new Promise((r) => setTimeout(r, 30));
 
+    let walls = [];
     switch (algorithm) {
       case MAZE_ALGORITHMS.RECURSIVE_DIVISION:
         walls = recursiveDivision(grid, start, end);
@@ -39,21 +40,20 @@ export function MazeGenerator() {
       return;
     }
 
-    setWalls([]);
-    await new Promise((r) => setTimeout(r, 20));
+    const total = walls.length;
+    const chunkSize = Math.max(1, Math.floor(total / 20));
 
-    const batchSize = walls.length > 500 ? 8 : walls.length > 200 ? 4 : 2;
-    for (let i = 0; i < walls.length; i += batchSize) {
+    for (let i = 0; i < total; i += chunkSize) {
       if (abortRef.current) break;
-      const batch = walls.slice(i, i + batchSize);
-      batch.forEach(({ row, col }) => {
-        addWall(row, col);
-      });
-      await new Promise((r) => setTimeout(r, 12));
+      setWalls(walls.slice(0, i + chunkSize));
+      await new Promise((r) => setTimeout(r, 25));
     }
 
+    setWalls(walls);
     setIsGenerating(false);
   };
+
+  const algoEntries = Object.values(MAZE_ALGORITHMS);
 
   return (
     <div className="relative">
@@ -70,13 +70,14 @@ export function MazeGenerator() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
           </svg>
         )}
-        {isGenerating ? 'Generating...' : 'Maze'}
+        {isGenerating ? '...' : 'Maze'}
       </button>
 
       {isOpen && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
-          <div className={`absolute top-full left-0 mt-2 w-80 rounded-xl border shadow-2xl z-50 overflow-hidden ${colors.card}`}>
+
+          <div className={`hidden sm:block absolute top-full left-0 mt-2 w-80 rounded-xl border shadow-2xl z-50 overflow-hidden ${colors.card}`}>
             <div className={`px-3 py-2 border-b ${colors.border}`}>
               <span className={`text-[10px] font-semibold uppercase tracking-wider ${colors.textMuted}`}
                 style={{ fontFamily: "'JetBrains Mono', monospace" }}>
@@ -84,7 +85,7 @@ export function MazeGenerator() {
               </span>
             </div>
             <div className="p-1.5">
-              {Object.values(MAZE_ALGORITHMS).map((algo) => {
+              {algoEntries.map((algo) => {
                 const info = MAZE_INFO[algo];
                 return (
                   <button
@@ -104,6 +105,47 @@ export function MazeGenerator() {
                           {info.name}
                         </div>
                         <div className={`text-[11px] ${colors.textMuted} mt-0.5 leading-relaxed`}>
+                          {info.description}
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className={`sm:hidden fixed bottom-0 left-0 right-0 z-50 rounded-t-2xl border-t shadow-2xl ${colors.card} ${colors.border}`}>
+            <div className={`px-4 py-3 border-b ${colors.border} flex items-center justify-between`}>
+              <span className={`text-xs font-semibold uppercase tracking-wider ${colors.textMuted}`}
+                style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+                Generate Maze
+              </span>
+              <button onClick={() => setIsOpen(false)} className={`text-xs ${colors.textMuted} px-2 py-1 rounded`}>
+                Close
+              </button>
+            </div>
+            <div className="p-2 pb-6">
+              {algoEntries.map((algo) => {
+                const info = MAZE_INFO[algo];
+                return (
+                  <button
+                    key={algo}
+                    onClick={() => generateMaze(algo)}
+                    className={`w-full text-left px-4 py-3 rounded-xl transition-all duration-150 ${colors.surfaceHover} group active:scale-[0.98]`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-violet-600/20 flex items-center justify-center shrink-0">
+                        <svg className="w-4 h-4 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <div className={`text-base font-medium ${colors.text} group-hover:text-violet-400 transition-colors`}
+                          style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                          {info.name}
+                        </div>
+                        <div className={`text-xs ${colors.textMuted} mt-0.5 leading-relaxed`}>
                           {info.description}
                         </div>
                       </div>
