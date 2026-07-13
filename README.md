@@ -1,160 +1,156 @@
-# Pathfinding Algorithm Visualizer
+# 🧭 Pathfinding Algorithm Visualizer
 
-🌐 **Live Demo:** https://pathfinding-ecru.vercel.app/
+> **An interactive visualizer for exploring how popular pathfinding algorithms work—step by step, cell by cell.**
 
-An interactive web application for visualizing **9 popular pathfinding algorithms** in real time. Build your own mazes, compare algorithms side by side, and watch each search strategy explore the grid **cell by cell**.
+### 🌐 Live Demo
+### **https://pathfinding-ecru.vercel.app/**
 
 ---
 
-## ✨ Features
+## ✨ Overview
 
-### 🧠 9 Pathfinding Algorithms
+Pathfinding Algorithm Visualizer is an educational web application built to help users understand how different search algorithms explore a grid and find paths.
 
-Visualize and compare:
+Create your own mazes, generate random ones, compare multiple algorithms side-by-side, and inspect every decision they make in real time.
 
-- A*
-- Dijkstra
-- Breadth-First Search (BFS)
-- Depth-First Search (DFS)
-- Greedy Best-First Search
-- Bidirectional BFS
-- Jump Point Search (JPS)
-- Bidirectional A*
-- Iterative Deepening DFS (IDDFS)
+---
+
+## 🚀 Features
+
+### 🔍 Pathfinding Algorithms
+
+Visualize **9 different algorithms**:
+
+- ⭐ A*
+- 🟡 Dijkstra
+- 🔵 Breadth-First Search (BFS)
+- 🟣 Depth-First Search (DFS)
+- 🟢 Greedy Best-First Search
+- 🔄 Bidirectional BFS
+- ⚡ Jump Point Search (JPS)
+- 🚀 Bidirectional A*
+- 🌲 Iterative Deepening DFS (IDDFS)
+
+---
 
 ### 🏁 Compare Mode
 
-Run multiple algorithms on the **same maze** and see which one reaches the goal first.
+Run multiple algorithms on the **same maze** and compare:
+
+- Search speed
+- Nodes explored
+- Path length
+- Overall efficiency
+
+---
 
 ### 📊 Cost Visualization
 
-Display **f**, **g**, and **h** values directly on grid cells to understand how weighted algorithms make decisions.
+Understand how weighted algorithms think by displaying:
 
-### 📜 Built-in Pseudocode
+- **g** → Distance from the start
+- **h** → Heuristic estimate
+- **f = g + h** → Total cost
 
-Every algorithm includes syntax-highlighted pseudocode for easier learning.
+---
 
-### 💡 Algorithm Explanations
+### 📜 Built-in Learning Tools
 
-Terminal-style information panel showing:
+Every algorithm includes:
 
-- How the algorithm works
+- Syntax-highlighted pseudocode
+- Algorithm explanation
 - Time & space complexity
-- Advantages
 - Best use cases
+- Terminal-style documentation panel
+
+---
 
 ### 🧱 Maze Generation
 
-Generate mazes instantly using:
+Generate test cases instantly with:
 
 - Recursive Division
 - Recursive Backtracker
 - Random Walls
 
-### ✏️ Custom Maze Editor
-
-Click and drag to create your own walls and obstacles.
-
-### 📈 Live Metrics
-
-Track performance in real time:
-
-- Nodes explored
-- Path length
-- Execution time
-
-### ⚡ Adjustable Speed
-
-Choose from six animation speeds:
-
-- Crawl
-- Slow
-- Normal
-- Fast
-- Turbo
-- Instant
-
-### 🌙 Dark & Light Themes
-
-Switch between light and dark mode.
-
-### 📱 Mobile Friendly
-
-Fully responsive with touch support.
-
-### 🎓 Interactive Tutorial
-
-A guided onboarding experience for first-time users.
+Or create your own maze by clicking and dragging.
 
 ---
 
-## 🛠️ Tech Stack
+### ⚡ Additional Features
 
-- React
-- Vite
-- Tailwind CSS
-- Vercel
-
----
-
-## 🧩 Algorithms
-
-| Algorithm | Type | Shortest Path | Time Complexity | Cost Display |
-|-----------|------|---------------|-----------------|--------------|
-| A* | Weighted | ✅ Yes | O(E log V) | f = g + h |
-| Dijkstra | Weighted | ✅ Yes | O(E + V log V) | g |
-| BFS | Unweighted | ✅ Yes | O(V + E) | — |
-| DFS | Unweighted | ❌ No | O(V + E) | — |
-| Greedy Best-First | Weighted | ❌ No | O(E log V) | h |
-| Bidirectional BFS | Unweighted | ✅ Yes | O(V + E) | — |
-| Jump Point Search | Weighted | ✅ Yes | O(E log V) | f = g + h |
-| Bidirectional A* | Weighted | ✅ Yes | O(E log V) | f = g + h |
-| IDDFS | Unweighted | ✅ Yes* | O(V + E) | — |
-
-> *IDDFS guarantees the shortest path only on unweighted graphs.
+- 🌙 Dark & Light themes
+- 📱 Fully responsive & mobile friendly
+- 🎓 Interactive onboarding tutorial
+- 📈 Live metrics
+- 🎛️ 6 animation speeds
+- 🖱️ Click & drag wall editing
 
 ---
 
-## 🚀 Getting Started
+# 📈 Algorithms
+
+| Algorithm | Type | Shortest Path | Complexity | Cost |
+|------------|------|---------------|------------|------|
+| A* | Weighted | ✅ | O(E log V) | f = g + h |
+| Dijkstra | Weighted | ✅ | O(E + V log V) | g |
+| BFS | Unweighted | ✅ | O(V + E) | — |
+| DFS | Unweighted | ❌ | O(V + E) | — |
+| Greedy Best-First | Weighted | ❌ | O(E log V) | h |
+| Bidirectional BFS | Unweighted | ✅ | O(V + E) | — |
+| Jump Point Search | Weighted | ✅ | O(E log V) | f = g + h |
+| Bidirectional A* | Weighted | ✅ | O(E log V) | f = g + h |
+| IDDFS* | Unweighted | ✅ | O(V + E) | — |
+
+> *IDDFS guarantees the shortest path only on unweighted graphs.*
+
+---
+
+# 🛠️ Tech Stack
+
+- ⚛️ React
+- ⚡ Vite
+- 🎨 Tailwind CSS
+- ▲ Vercel
+
+---
+
+# 🚀 Getting Started
 
 Clone the repository:
 
 ```bash
 git clone https://github.com/zakisserious/pathfinder.git
 cd pathfinder
+```
 
+Install dependencies:
+
+```bash
 npm install
+```
+
+Start the development server:
+
+```bash
 npm run dev
 ```
 
-Then open:
+Open your browser:
 
-```
+```text
 http://localhost:5173
 ```
 
 ---
 
-## 📂 Project Structure
+# 📂 Project Structure
 
 ```text
 src/
 ├── algorithms/
-│   ├── astar.js
-│   ├── dijkstra.js
-│   ├── bfs.js
-│   ├── dfs.js
-│   ├── greedyBestFirst.js
-│   ├── bidirectionalBfs.js
-│   ├── jumpPointSearch.js
-│   ├── bidirectionalAStar.js
-│   └── iddfs.js
-│
 ├── maze/
-│   ├── recursiveDivision.js
-│   ├── recursiveBacktracker.js
-│   └── randomWalls.js
-│
 ├── components/
 │   ├── Grid/
 │   ├── Controls/
@@ -163,29 +159,39 @@ src/
 │   ├── Metrics/
 │   ├── Tutorial/
 │   └── UI/
-│
 ├── context/
-│
 └── utils/
 ```
 
 ---
 
-## 🎮 How It Works
+# 🎮 How to Use
 
-1. Draw walls by clicking or dragging on the grid.
-2. Generate a maze using one of the built-in generators (optional).
-3. Choose one of the **9 pathfinding algorithms**.
-4. Toggle **Cost Display** to see `f`, `g`, and `h` values.
-5. View the built-in pseudocode and algorithm explanation.
-6. Click **Run Algorithm**.
-7. Watch the algorithm explore the grid in real time.
-8. Enable **Compare Mode** to race multiple algorithms on the same maze.
+1. Draw walls or generate a maze.
+2. Select a pathfinding algorithm.
+3. (Optional) Enable **Cost Visualization**.
+4. Run the algorithm.
+5. Watch it explore the grid in real time.
+6. Compare multiple algorithms using **Compare Mode**.
 
 ---
 
-## 📄 License
+# 🎯 Purpose
 
-Licensed under the **MIT License**.
+This project was built to make pathfinding algorithms easier to understand through interactive visualization.
+
+It's useful for:
+
+- Computer Science students
+- Interview preparation
+- Learning graph algorithms
+- Teaching data structures & algorithms
+- Anyone curious about how pathfinding works
+
+---
+
+# 📄 License
+
+This project is licensed under the **MIT License**.
 
 ---
