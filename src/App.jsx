@@ -21,7 +21,7 @@ function AppContent() {
           <CompareView />
         ) : (
           <>
-            <div className={`rounded-xl sm:rounded-2xl border ${colors.gridBorder} overflow-hidden ${colors.gridGlow} grid-glow flex justify-center`}>
+            <div className={`rounded-xl sm:rounded-2xl border ${colors.gridBorder} overflow-visible ${colors.gridGlow} grid-glow flex justify-center`}>
               <Grid />
             </div>
             <Legend />

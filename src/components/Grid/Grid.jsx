@@ -91,8 +91,8 @@ export function Grid() {
 
   useEffect(() => {
     const handleTouchMove = (e) => {
-      e.preventDefault();
       if (!mouseState) return;
+      e.preventDefault();
       const touch = e.touches[0];
       const rect = gridRef.current?.getBoundingClientRect();
       if (!rect) return;
@@ -117,7 +117,7 @@ export function Grid() {
 
   return (
     <div
-      className="flex justify-center items-center overflow-auto"
+      className="flex justify-center items-center overflow-visible"
       style={{ touchAction: 'none' }}
     >
       <div

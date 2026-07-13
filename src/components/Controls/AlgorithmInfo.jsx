@@ -1,10 +1,48 @@
+import { useState } from 'react';
 import { useTheme } from '../../context/ThemeContext';
 import { useGrid } from '../../context/GridContext';
 import { ALGORITHM_INFO } from '../../utils/constants';
 
+const KEYWORDS = new Set([
+  'function', 'for', 'if', 'else', 'while', 'return', 'and', 'or', 'not', 'in', 'to', 'true', 'false',
+]);
+
+function highlightPseudocode(lines) {
+  return lines.map((line, i) => {
+    if (line === '') return <br key={i} />;
+
+    const commentIdx = line.indexOf('//');
+    let code = commentIdx >= 0 ? line.slice(0, commentIdx) : line;
+    let comment = commentIdx >= 0 ? line.slice(commentIdx) : '';
+
+    const parts = [];
+    const tokens = code.split(/(\s+|[(),:=+\[\]{}.!?])/);
+    for (let j = 0; j < tokens.length; j++) {
+      const t = tokens[j];
+      if (!t) continue;
+      if (KEYWORDS.has(t)) {
+        parts.push(<span key={`${i}-${j}`} className="pseudo-kw">{t}</span>);
+      } else if (/^\d/.test(t)) {
+        parts.push(<span key={`${i}-${j}`} className="pseudo-number">{t}</span>);
+      } else {
+        parts.push(t);
+      }
+    }
+
+    return (
+      <div key={i} className="pseudocode-line">
+        <span className="pseudocode-linenum">{String(i + 1).padStart(2, ' ')}</span>
+        <span>{parts}</span>
+        {comment && <span className="pseudo-comment">{comment}</span>}
+      </div>
+    );
+  });
+}
+
 export function AlgorithmInfo() {
   const { colors } = useTheme();
   const { selectedAlgorithm } = useGrid();
+  const [showCode, setShowCode] = useState(false);
   const info = ALGORITHM_INFO[selectedAlgorithm];
 
   if (!info) return null;
@@ -62,6 +100,20 @@ export function AlgorithmInfo() {
           </span>
         </div>
 
+        {info.howItWorks && (
+          <div>
+            <div
+              className={`text-[10px] ${colors.textMuted} mb-1`}
+              style={{ fontFamily: "'JetBrains Mono', monospace" }}
+            >
+              {'>'} how_it_works
+            </div>
+            <p className={`text-[11px] ${colors.textSecondary} leading-relaxed`}>
+              {info.howItWorks}
+            </p>
+          </div>
+        )}
+
         <div>
           <div
             className={`text-[10px] ${colors.textMuted} mb-1`}
@@ -74,8 +126,27 @@ export function AlgorithmInfo() {
           </p>
         </div>
 
+        {info.pseudocode && (
+          <div>
+            <button
+              onClick={() => setShowCode(!showCode)}
+              className={`flex items-center gap-1.5 text-[10px] ${colors.textMuted} hover:text-violet-400 transition-colors cursor-pointer`}
+              style={{ fontFamily: "'JetBrains Mono', monospace" }}
+            >
+              <span className={`transition-transform duration-200 ${showCode ? 'rotate-90' : ''}`}>{'>'}</span>
+              {showCode ? 'hide' : 'cat'} pseudocode
+            </button>
+
+            {showCode && (
+              <div className="pseudocode-block mt-2">
+                {highlightPseudocode(info.pseudocode)}
+              </div>
+            )}
+          </div>
+        )}
+
         <div className="flex items-center gap-1">
-          <span className={`terminal-cursor`} />
+          <span className="terminal-cursor" />
           <span
             className={`text-[10px] ${colors.textMuted}`}
             style={{ fontFamily: "'JetBrains Mono', monospace" }}

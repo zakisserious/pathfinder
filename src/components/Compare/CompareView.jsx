@@ -165,7 +165,7 @@ export function CompareView() {
                   {info.shortName}
                 </span>
               </div>
-              <div className={`rounded-lg border ${colors.gridBorder} overflow-hidden`}>
+              <div className={`rounded-lg border ${colors.gridBorder} overflow-visible`}>
                 {algoGrid ? (
                   <CompareGrid
                     grid={algoGrid}
