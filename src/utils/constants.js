@@ -153,9 +153,12 @@ export const MAZE_INFO = {
 };
 
 export const SPEEDS = {
-  SLOW: { label: 'Slow', delay: 80 },
-  MEDIUM: { label: 'Medium', delay: 30 },
-  FAST: { label: 'Fast', delay: 5 },
+  CRAWL: { label: 'Crawl', delay: 200 },
+  SLOW: { label: 'Slow', delay: 100 },
+  NORMAL: { label: 'Normal', delay: 40 },
+  FAST: { label: 'Fast', delay: 15 },
+  TURBO: { label: 'Turbo', delay: 5 },
+  INSTANT: { label: 'Instant', delay: 1 },
 };
 
 export const THEMES = {

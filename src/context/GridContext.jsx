@@ -19,7 +19,7 @@ export function GridProvider({ children }) {
     return getDefaultStartEnd(rows, cols).end;
   });
   const [selectedAlgorithm, setSelectedAlgorithm] = useState(ALGORITHMS.ASTAR);
-  const [speed, setSpeed] = useState(SPEEDS.MEDIUM);
+  const [speed, setSpeed] = useState(SPEEDS.NORMAL);
   const [isRunning, setIsRunning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [showValues, setShowValues] = useState(false);
