@@ -95,10 +95,14 @@ export function GridProvider({ children }) {
 
   const setWalls = useCallback((walls) => {
     setGrid((prev) => {
+      const rows = prev.length;
+      const cols = prev[0]?.length || 0;
       const newGrid = prev.map((r) => r.map((c) => ({ ...c, isWall: false })));
       walls.forEach(({ row, col }) => {
-        if (!newGrid[row][col].isStart && !newGrid[row][col].isEnd) {
-          newGrid[row][col].isWall = true;
+        if (row >= 0 && row < rows && col >= 0 && col < cols) {
+          if (!newGrid[row][col].isStart && !newGrid[row][col].isEnd) {
+            newGrid[row][col].isWall = true;
+          }
         }
       });
       return newGrid;
