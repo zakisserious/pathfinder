@@ -41,6 +41,7 @@ export function Toolbar() {
 
   const runAlgorithm = async () => {
     if (isRunning) return;
+    setControlsOpen(false);
 
     const cleanGrid = resetGridState(grid);
     updateGrid(cleanGrid);

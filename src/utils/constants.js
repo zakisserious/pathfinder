@@ -15,6 +15,9 @@ export const ALGORITHMS = {
   DFS: 'dfs',
   GREEDY: 'greedy',
   BIDIRECTIONAL: 'bidirectional',
+  JPS: 'jps',
+  BIDIRECTIONAL_ASTAR: 'bidirectionalAStar',
+  IDDFS: 'iddfs',
 };
 
 export const ALGORITHM_INFO = {
@@ -88,6 +91,42 @@ export const ALGORITHM_INFO = {
     weighted: false,
     guaranteesShortest: true,
     bestFor: 'Large grids where searching from both ends is more efficient. Used in social networks and navigation systems.',
+    showsValues: false,
+  },
+  [ALGORITHMS.JPS]: {
+    name: 'Jump Point Search',
+    shortName: 'JPS',
+    description:
+      'An optimization of A* that identifies "jump points" — strategically important nodes — and skips over uniform-cost regions. Dramatically fewer nodes are evaluated while still guaranteeing optimal paths on uniform grids.',
+    timeComplexity: 'O(E log V)',
+    spaceComplexity: 'O(V)',
+    weighted: true,
+    guaranteesShortest: true,
+    bestFor: 'Large uniform grids. Up to 10x faster than A* by pruning redundant paths.',
+    showsValues: true,
+  },
+  [ALGORITHMS.BIDIRECTIONAL_ASTAR]: {
+    name: 'Bidirectional A*',
+    shortName: 'Bi-A*',
+    description:
+      'Combines bidirectional search with A* heuristics — runs two A* searches simultaneously from start and end. Heuristics guide both searches toward each other, meeting faster than plain bidirectional BFS.',
+    timeComplexity: 'O(E log V)',
+    spaceComplexity: 'O(V)',
+    weighted: true,
+    guaranteesShortest: true,
+    bestFor: 'Large grids with clear line-of-sight. Best of both worlds: heuristic-guided and bidirectional.',
+    showsValues: true,
+  },
+  [ALGORITHMS.IDDFS]: {
+    name: 'Iterative Deepening DFS',
+    shortName: 'IDDFS',
+    description:
+      'Repeatedly runs depth-limited DFS with increasing depth limits. Combines DFS\'s low memory usage with BFS\'s guarantee of finding the shortest path. Explores in expanding waves from the start.',
+    timeComplexity: 'O(V + E)',
+    spaceComplexity: 'O(V)',
+    weighted: false,
+    guaranteesShortest: true,
+    bestFor: 'Memory-constrained environments. Optimal like BFS but with linear memory.',
     showsValues: false,
   },
 };
@@ -190,5 +229,29 @@ export const ALGORITHM_COLORS = {
     dot: 'bg-blue-400',
     hex: '#3B82F6',
     pathHex: '#93C5FD',
+  },
+  [ALGORITHMS.JPS]: {
+    visited: 'bg-fuchsia-500',
+    path: 'bg-fuchsia-300',
+    label: 'text-fuchsia-400',
+    dot: 'bg-fuchsia-400',
+    hex: '#D946EF',
+    pathHex: '#F0ABFC',
+  },
+  [ALGORITHMS.BIDIRECTIONAL_ASTAR]: {
+    visited: 'bg-teal-500',
+    path: 'bg-teal-300',
+    label: 'text-teal-400',
+    dot: 'bg-teal-400',
+    hex: '#14B8A6',
+    pathHex: '#5EEAD4',
+  },
+  [ALGORITHMS.IDDFS]: {
+    visited: 'bg-orange-500',
+    path: 'bg-orange-300',
+    label: 'text-orange-400',
+    dot: 'bg-orange-400',
+    hex: '#F97316',
+    pathHex: '#FDBA74',
   },
 };
