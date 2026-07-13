@@ -8,17 +8,17 @@ export function calculateGridSize() {
   let cellSize, padding;
 
   if (isMobile) {
-    cellSize = 18;
-    padding = 4;
+    cellSize = 14;
+    padding = 2;
   } else if (isTablet) {
+    cellSize = 20;
+    padding = 8;
+  } else {
     cellSize = 26;
     padding = 12;
-  } else {
-    cellSize = 32;
-    padding = 16;
   }
 
-  const chromeHeight = isMobile ? 76 : 88;
+  const chromeHeight = isMobile ? 72 : 84;
   const availableWidth = width - padding * 2 - 2;
   const availableHeight = height - chromeHeight;
 
@@ -31,8 +31,8 @@ export function calculateGridSize() {
   }
 
   return {
-    rows: Math.max(6, Math.min(rows, 50)),
-    cols: Math.max(6, Math.min(cols, 80)),
+    rows: Math.max(6, Math.min(rows, 60)),
+    cols: Math.max(6, Math.min(cols, 100)),
     cellSize,
   };
 }

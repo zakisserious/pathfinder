@@ -89,66 +89,74 @@
 
 /* Animations */
 @keyframes pulse-start {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.4); }
-  50% { box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
+  0%, 100% { box-shadow: 0 0 12px rgba(52, 211, 153, 0.6), 0 0 24px rgba(52, 211, 153, 0.3); }
+  50% { box-shadow: 0 0 16px rgba(52, 211, 153, 0.8), 0 0 32px rgba(52, 211, 153, 0.4); }
 }
 
 @keyframes pulse-end {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(251, 113, 133, 0.4); }
-  50% { box-shadow: 0 0 0 6px rgba(251, 113, 133, 0); }
+  0%, 100% { box-shadow: 0 0 12px rgba(251, 113, 133, 0.6), 0 0 24px rgba(251, 113, 133, 0.3); }
+  50% { box-shadow: 0 0 16px rgba(251, 113, 133, 0.8), 0 0 32px rgba(251, 113, 133, 0.4); }
 }
 
 @keyframes visited-glow {
   0% {
-    transform: scale(0.6);
     opacity: 0;
-    box-shadow: 0 0 0 0 rgba(34, 211, 238, 0);
+    transform: scale(0.3);
   }
-  50% {
-    transform: scale(1.05);
+  40% {
     opacity: 1;
-    box-shadow: 0 0 8px rgba(34, 211, 238, 0.3);
+    transform: scale(1.15);
   }
   100% {
-    transform: scale(1);
     opacity: 1;
-    box-shadow: 0 0 2px rgba(34, 211, 238, 0.1);
+    transform: scale(1);
   }
 }
 
 @keyframes frontier-glow {
   0% {
-    transform: scale(0.8);
     opacity: 0;
+    transform: scale(0.5);
   }
   100% {
-    transform: scale(1);
     opacity: 1;
-    box-shadow: 0 0 6px rgba(167, 139, 250, 0.25);
+    transform: scale(1);
   }
 }
 
 @keyframes path-glow {
   0% {
-    transform: scale(0.5);
-    opacity: 0.3;
-    box-shadow: 0 0 0 0 rgba(251, 191, 36, 0);
+    opacity: 0;
+    transform: scale(0.3);
   }
   50% {
-    transform: scale(1.1);
     opacity: 1;
-    box-shadow: 0 0 12px rgba(251, 191, 36, 0.5);
+    transform: scale(1.2);
   }
   100% {
-    transform: scale(1);
     opacity: 1;
-    box-shadow: 0 0 4px rgba(251, 191, 36, 0.2);
+    transform: scale(1);
   }
 }
 
 @keyframes wall-appear {
-  0% { transform: scale(0.7); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes wall-place {
+  0% { transform: scale(0.7); opacity: 0.5; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 @keyframes terminal-blink {
@@ -175,19 +183,23 @@
 }
 
 .cell-visited {
-  animation: visited-glow 0.4s ease-out forwards;
+  animation: visited-glow 0.3s ease-out forwards;
 }
 
 .cell-frontier {
-  animation: frontier-glow 0.3s ease-out forwards;
+  animation: frontier-glow 0.25s ease-out forwards;
 }
 
 .cell-path {
-  animation: path-glow 0.4s ease-out forwards;
+  animation: path-glow 0.35s ease-out forwards;
 }
 
 .cell-wall {
-  animation: wall-appear 0.2s ease-out;
+  animation: wall-appear 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cell-maze-place {
+  animation: wall-place 0.15s ease-out forwards;
 }
 
 .terminal-cursor {
@@ -231,7 +243,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, .cell-start, .cell-end, .cell-visited, .cell-frontier, .cell-path, .cell-wall, .terminal-cursor, .shimmer-text {
+  *, .cell-start, .cell-end, .cell-visited, .cell-frontier, .cell-path, .cell-wall, .cell-maze-place, .terminal-cursor, .shimmer-text {
     animation: none !important;
     transition-duration: 0.01ms !important;
   }

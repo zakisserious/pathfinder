@@ -105,6 +105,16 @@ export function GridProvider({ children }) {
     });
   }, []);
 
+  const addWall = useCallback((row, col) => {
+    setGrid((prev) => {
+      const cell = prev[row][col];
+      if (cell.isStart || cell.isEnd || cell.isWall) return prev;
+      const newGrid = prev.map((r) => r.map((c) => ({ ...c })));
+      newGrid[row][col].isWall = true;
+      return newGrid;
+    });
+  }, []);
+
   const updateGrid = useCallback((newGrid) => {
     setGrid(newGrid);
   }, []);
@@ -142,6 +152,7 @@ export function GridProvider({ children }) {
         moveStart,
         moveEnd,
         setWalls,
+        addWall,
         updateGrid,
       }}
     >
