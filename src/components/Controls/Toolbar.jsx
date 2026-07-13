@@ -213,13 +213,19 @@ export function Toolbar() {
               <SpeedSlider />
 
               {!isCompareMode && (
-                <>
+                <div className="flex items-center gap-2">
                   <div className="hidden sm:block w-px h-5 bg-[#1E293B] mx-1" />
-                  <div className="flex items-center gap-2">
-                    <Toggle checked={showValues} onChange={setShowValues} label="Show values" />
-                    <span className={`text-xs ${colors.textMuted}`}>f/g/h</span>
-                  </div>
-                </>
+                  <Toggle checked={showValues} onChange={setShowValues} label="Show costs" />
+                  <span className={`text-xs ${colors.textMuted}`}>Costs</span>
+                  {showValues && (
+                    <span
+                      className={`text-[10px] ${colors.textMuted} hidden lg:inline`}
+                      style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                    >
+                      top = f (total) &middot; bottom = g (traveled) h (estimate)
+                    </span>
+                  )}
+                </div>
               )}
             </div>
           </div>

@@ -17,9 +17,12 @@ export const Cell = memo(function Cell({ cell, start, end, cellSize, onMouseDown
   else if (cell.isFrontier) { colorClass = colors.cell.frontier; animClass = 'cell-frontier'; }
 
   const showValue = showValues && !cell.isWall && !isStart && !isEnd && (cell.isVisited || cell.isPath);
-  const value = cell.totalCost !== undefined && cell.totalCost !== Infinity ? cell.totalCost
-    : cell.distance !== undefined && cell.distance !== Infinity ? cell.distance
-    : null;
+  const f = cell.totalCost !== undefined && cell.totalCost !== Infinity ? cell.totalCost : null;
+  const g = cell.distance !== undefined && cell.distance !== Infinity ? cell.distance : null;
+  const h = cell.heuristic !== undefined && cell.heuristic !== Infinity ? cell.heuristic : null;
+  const hasCostData = (f !== null && f > 0) || (g !== null && g > 0);
+  const labelSize = Math.max(cellSize * 0.28, 5);
+  const valueSize = Math.max(cellSize * 0.32, 6);
 
   const markerSize = Math.max(cellSize * 0.7, 16);
 
@@ -70,16 +73,18 @@ export const Cell = memo(function Cell({ cell, start, end, cellSize, onMouseDown
           E
         </div>
       )}
-      {showValue && value !== null && value < 9999 && (
-        <span
-          className={`absolute text-[6px] leading-none font-bold ${colors.valueText} pointer-events-none`}
-          style={{
-            fontFamily: "'JetBrains Mono', monospace",
-            textShadow: '0 1px 3px rgba(0,0,0,0.8)',
-          }}
+      {showValue && hasCostData && (
+        <div
+          className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none leading-none"
+          style={{ fontFamily: "'JetBrains Mono', monospace", textShadow: '0 1px 3px rgba(0,0,0,0.9)' }}
         >
-          {Math.round(value)}
-        </span>
+          <span className={`font-bold ${colors.valueText}`} style={{ fontSize: valueSize }}>
+            {f !== null ? Math.round(f) : ''}
+          </span>
+          <span className={`${colors.textMuted}`} style={{ fontSize: labelSize }}>
+            {g !== null ? Math.round(g) : ''}{g !== null && h !== null ? ' ' : ''}{h !== null ? Math.round(h) : ''}
+          </span>
+        </div>
       )}
     </div>
   );
