@@ -17,19 +17,20 @@ export const CompareGrid = memo(function CompareGrid({ grid, start, end, cellSiz
           const isEnd = cell.row === end.row && cell.col === end.col;
 
           let bgColor = colors.cell.empty;
-          if (cell.isWall) bgColor = colors.cell.wall;
-          else if (isStart) bgColor = colors.cell.start;
-          else if (isEnd) bgColor = colors.cell.end;
-          else if (cell.isPath) bgColor = algoColors.path;
-          else if (cell.isVisited) bgColor = algoColors.visited;
-          else if (cell.isFrontier) bgColor = algoColors.visited + '/50';
+          let animClass = '';
+          if (cell.isWall) { bgColor = colors.cell.wall; animClass = 'cell-wall'; }
+          else if (isStart) { bgColor = colors.cell.start; animClass = 'cell-start'; }
+          else if (isEnd) { bgColor = colors.cell.end; animClass = 'cell-end'; }
+          else if (cell.isPath) { bgColor = algoColors.path; animClass = 'cell-path'; }
+          else if (cell.isVisited) { bgColor = algoColors.visited; animClass = 'cell-visited'; }
+          else if (cell.isFrontier) { bgColor = algoColors.visited + '/50'; animClass = 'cell-frontier'; }
 
           const markerSize = Math.max(cellSize * 0.6, 12);
 
           return (
             <div
               key={`${cell.row}-${cell.col}`}
-              className={`${bgColor} transition-colors duration-[80ms] flex items-center justify-center`}
+              className={`${bgColor} ${animClass} flex items-center justify-center`}
               style={{ width: cellSize, height: cellSize, minWidth: cellSize, minHeight: cellSize }}
             >
               {isStart && (
